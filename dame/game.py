@@ -13,6 +13,14 @@ class Game:
         self._init()
         self.screen = screen
 
+    def __repr__(self):
+        if self.turn == WHITE:
+            return "Game: Turn={}, Winner={}"\
+                .format('WHITE', self.winner())
+        else:
+            return "Game: Turn={}, Winner={}"\
+                .format('BLACK', self.winner())
+
 
     def _init(self):
         self.selection = None
@@ -79,21 +87,6 @@ class Game:
 
     def winner(self):
         return self.board.winner()
-
-    def draw_winning_message(self, screen, winner):
-        pg.draw.rect(screen, BLUE, (WIDTH//4, HEIGHT//4, WIDTH//2, HEIGHT//2))
-        font = pg.font.SysFont('Comic Sans MS', 24)
-        if winner == 0:
-            img = font.render('WHITE has won', False, WHITE)
-            
-        elif winner == 1:
-            img = font.render('BLACK has won', False, WHITE)
-            screen.blit(img, (WIDTH//4, HEIGHT//4))
-        
-        else:
-            img = font.render('Its a tie', False, WHITE)
-            screen.blit(img, (WIDTH//4, HEIGHT//4))
-
 
     def restart(self):
         self._init()

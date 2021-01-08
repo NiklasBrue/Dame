@@ -1,7 +1,7 @@
 import pygame as pg
 import time
 from dame.constants import WIDTH, HEIGHT, SQR_SIZE
-from dame.colors import D_BROWN, L_BROWN, BLACK, WHITE
+from dame.colors import D_BROWN, L_BROWN, BLACK, WHITE, BLUE
 from dame.board import Board
 from dame.piece import Piece
 from dame.game import Game
@@ -32,8 +32,9 @@ def main():
     while not game_over:
         clock.tick(30)
 
-        if game.winner() == 0:
-            game.draw_winning_message(SCREEN, WHITE)
+        if game.winner() != None:
+            print(game.winner())
+            break
 
         for event in pg.event.get():
             if event.type == pg.QUIT:

@@ -38,6 +38,10 @@ class Piece():
         self.is_queen = True
 
     def draw_piece(self, screen):
+        if self.color == BLACK:
+            pg.draw.circle(screen, WHITE, (self.board_x_coord, self.board_y_coord), 43)
+        else: 
+            pg.draw.circle(screen, BLACK, (self.board_x_coord, self.board_y_coord), 43)
         pg.draw.circle(screen, self.color, (self.board_x_coord, self.board_y_coord), 40)
         if self.is_queen:
             screen.blit(CROWN, (self.board_x_coord - CROWN.get_width()/2, self.board_y_coord - CROWN.get_height()/2))

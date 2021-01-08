@@ -83,15 +83,13 @@ class Board:
                     self.white_pieces_left -= 1
                 else:
                     self.black_pieces_left -= 1
-        print(self.white_pieces_left)
 
     def winner(self):
-        if self.white_pieces_left == 0:
-            return 0
-        elif self.black_pieces_left == 0:
-            return 1
-        else: 
-            return None
+        if self.white_pieces_left <= 0:
+            return 'BLACK has won'
+        elif self.black_pieces_left <= 0:
+            return 'WHITE has won'
+        return None
 
 
     # def get_valid_moves(self, piece):
@@ -266,4 +264,3 @@ class Board:
             right += 1
         
         return moves
-
