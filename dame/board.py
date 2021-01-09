@@ -183,21 +183,6 @@ class Board:
 
     #         right += 1 
     #     return valid_moves
-    
-    def get_valid_moves(self, piece):
-        moves = {}
-        left = piece.col - 1
-        right = piece.col + 1
-        row = piece.row
-
-        if piece.color == BLACK or piece.is_queen:
-            moves.update(self._traverse_left(row -1, max(row-3, -1), -1, piece.color, left))
-            moves.update(self._traverse_right(row -1, max(row-3, -1), -1, piece.color, right))
-        if piece.color == WHITE or piece.is_queen:
-            moves.update(self._traverse_left(row +1, min(row+3, ROWS), 1, piece.color, left))
-            moves.update(self._traverse_right(row +1, min(row+3, ROWS), 1, piece.color, right))
-    
-        return moves
 
     def _traverse_left(self, start, stop, step, color, left, skipped=[]):
         moves = {}
@@ -264,3 +249,39 @@ class Board:
             right += 1
         
         return moves
+
+    def get_valid_moves(self, piece):
+        '''
+        returns a dictionary containing the valid moves of a given piece
+        '''
+        moves = {}
+        left = piece.col - 1
+        right = piece.col + 1
+        row = piece.row
+
+        if piece.color == BLACK or piece.is_queen:
+            moves.update(self._traverse_left(row -1, max(row-3, -1), -1, piece.color, left))
+            moves.update(self._traverse_right(row -1, max(row-3, -1), -1, piece.color, right))
+        if piece.color == WHITE or piece.is_queen:
+            moves.update(self._traverse_left(row +1, min(row+3, ROWS), 1, piece.color, left))
+            moves.update(self._traverse_right(row +1, min(row+3, ROWS), 1, piece.color, right))
+    
+        return moves
+
+    def get_all_pieces(self, color):
+        '''
+        returns all the pieces of a color
+        '''
+        pieces = []
+        for row in self.board:
+            for piece in row:
+                if piece != 0 and piece.color == color:
+                    pieces.append(piece)
+        return pieces
+
+    def evaluate(self):
+        '''
+        determines the score of the board, this is used in the minimax function
+        '''
+        score = self.white_pieces_left - self.black_pieces_left + (self.white_queens*0.5) - (self.black_queens*0.5)
+        return score

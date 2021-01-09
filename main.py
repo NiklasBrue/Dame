@@ -1,13 +1,17 @@
 import pygame as pg
-import time
 from dame.constants import WIDTH, HEIGHT, SQR_SIZE
-from dame.colors import D_BROWN, L_BROWN, BLACK, WHITE, BLUE
-from dame.board import Board
-from dame.piece import Piece
+from dame.colors import WHITE
 from dame.game import Game
+from minimax.algorithm import minimax
 
+opponent = input('What opponent would you like to have? (P/AI) ')
+if opponent == 'AI' or opponent == 'ai':
+    DEPTH = int(input('How strong should it be? (1-4) '))
 
 SCREEN = pg.display.set_mode((WIDTH, HEIGHT))
+
+
+
 pg.display.set_caption('DAME')
 pg.font.init()
 
@@ -21,7 +25,7 @@ def get_piece_position_from_mouse(mouse_position):
     col = x // SQR_SIZE
     return row, col
 
-def main():
+def main(opponent):
     '''
     main loop of the game    
     '''
@@ -34,9 +38,18 @@ def main():
 
         if game.winner() != None:
             print(game.winner())
-            break
+            game_over = True
+
+        if opponent == 'AI' or opponent == 'ai':
+            if game.turn == WHITE:
+                score, new_board = minimax(game.get_board(), DEPTH, WHITE, game)
+                game.ai_move(new_board)
 
         for event in pg.event.get():
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_r:
+                    game.restart()
+
             if event.type == pg.QUIT:
                 game_over = True
 
@@ -48,4 +61,6 @@ def main():
 
     pg.quit()
 
-main()
+
+
+main(opponent)

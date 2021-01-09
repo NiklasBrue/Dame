@@ -1,6 +1,7 @@
 import pygame as pg
-from .colors import WHITE, BLACK, CROWN
+from .colors import WHITE, BLACK
 from .constants import WIDTH, HEIGHT, SQR_SIZE, COLS, ROWS
+from pictures.picture_import import CROWN
 
 class Piece():
 
