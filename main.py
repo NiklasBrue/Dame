@@ -2,11 +2,16 @@ import pygame as pg
 from dame.constants import WIDTH, HEIGHT, SQR_SIZE
 from dame.colors import WHITE
 from dame.game import Game
-from minimax.algorithm import minimax
+from minimax.algorithm import draw_moves, minimax
 
 opponent = input('What opponent would you like to have? (P/AI) ')
 if opponent == 'AI' or opponent == 'ai':
     DEPTH = int(input('How strong should it be? (1-4) '))
+    DRAW = input('Should the decision process be drawn? (y/n) ')
+    if DRAW == 'y':
+        DRAW_MOVES = True
+    else:
+        DRAW_MOVES = False
 
 SCREEN = pg.display.set_mode((WIDTH, HEIGHT))
 
@@ -42,7 +47,7 @@ def main(opponent):
 
         if opponent == 'AI' or opponent == 'ai':
             if game.turn == WHITE:
-                score, new_board = minimax(game.get_board(), DEPTH, WHITE, game)
+                score, new_board = minimax(game.get_board(), DEPTH, WHITE, game, DRAW_MOVES)
                 game.ai_move(new_board)
 
         for event in pg.event.get():
